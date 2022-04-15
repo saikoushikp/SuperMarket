@@ -22,6 +22,7 @@ public class CashRegister {
 		return availableCount;
 	}
 
+	
 	public double totalValueInserted() {
 		double total = 0.0;
 		for (int i = 0; i < valuesInserted.size(); i++) {
