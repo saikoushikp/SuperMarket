@@ -8,7 +8,7 @@ import java.util.List;
 public class CashRegister {
 
 	private double[] acceptedValues = { 0.1, 0.5, 1, 2 };
-	private int[] availableCount = { 50, 50, 50, 50 };
+	private int[] availableCount = { 2, 50, 50, 50 };
 
 	List<Double> valuesInserted = new ArrayList<>();
 	List<Double> change = new ArrayList<>();
@@ -22,7 +22,6 @@ public class CashRegister {
 		return availableCount;
 	}
 
-	
 	public double totalValueInserted() {
 		double total = 0.0;
 		for (int i = 0; i < valuesInserted.size(); i++) {
@@ -37,6 +36,7 @@ public class CashRegister {
 		diff = d - totalValueInserted();
 		if (diff < 0)
 			diff = diff * -1;
+		diff = Math.round(diff * 10.0) / 10.0;
 		return diff;
 	}
 
@@ -57,28 +57,38 @@ public class CashRegister {
 	public List<Double> generateChange(String diff) {
 
 		double difference = Double.parseDouble(diff);
-		while (difference > 0) {
-			if (difference >= 2) {
-				difference = difference - 2;
+		try {
+			while (difference > 0) {
+				for (int i = 0; i < availableCount.length; i++) {
+					if (availableCount[i] <= 0) {
+						throw new Exception();
+					}
+				}
+				if (difference >= 2) {
+					difference = difference - 2;
 
-				updateCashBalance(2);
-				change.add((double) 2);
-			} else if (difference >= 1 && difference < 2) {
-				difference = difference - 1;
-				updateCashBalance(1);
-				change.add((double) 1);
-			} else if (difference >= 0.5 && difference < 1) {
-				difference = difference - 0.5;
-				updateCashBalance(0.5);
-				change.add(0.5);
-			} else if (difference < 0.5) {
-				difference = difference - 0.1;
-				updateCashBalance(0.1);
-				change.add(0.1);
+					updateCashBalance(2);
+					change.add((double) 2);
+				} else if (difference >= 1 && difference < 2) {
+					difference = difference - 1;
+					updateCashBalance(1);
+					change.add((double) 1);
+				} else if (difference >= 0.5 && difference < 1) {
+					difference = difference - 0.5;
+					updateCashBalance(0.5);
+					change.add(0.5);
+				} else if (difference < 0.5) {
+					difference = difference - 0.1;
+					updateCashBalance(0.1);
+					change.add(0.1);
+				}
+
+				difference = Math.round(difference * 10.0) / 10.0;
+
 			}
-
-			difference = Math.round(difference * 10.0) / 10.0;
-
+		} catch (Exception e) {
+			System.out.println("Not enough Change");
+			System.exit(0);
 		}
 
 		return change;

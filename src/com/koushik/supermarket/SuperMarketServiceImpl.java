@@ -5,16 +5,17 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SuperMarketServiceImpl implements SuperMarketService {
-	
-	private static SuperMarketServiceImpl instance =  new SuperMarketServiceImpl();
-	
+
+	private static SuperMarketServiceImpl instance = new SuperMarketServiceImpl();
+
 	private SuperMarketServiceImpl()
+
 	{
-		
+
 	}
-	
+
 	public static void main(String[] args) {
-		//SuperMarketService service = new SuperMarketServiceImpl();
+		// SuperMarketService service = new SuperMarketServiceImpl();
 		DecimalFormat df = new DecimalFormat("#.#");
 		System.out.println("------------------------------------");
 		System.out.println("Initial Product Inventory");
